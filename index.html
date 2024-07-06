@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budsy's Quizzes</title>
+    <style>
+        html,
+        body, 
+        .container {
+            margin: 0px; 
+            height: 100vh; 
+            width: 100vw; 
+            position: absolute;
+            overflow: hidden;
+            background-color: #86bcc7;
+        }
+
+        @font-face {
+            font-family: Luckiest-Guy;
+            src: url(assets/fonts/LuckiestGuy-Regular.ttf) format('truetype');
+        }
+
+        @font-face {
+            font-family: BaksoSapio-Regular;
+            src: url(assets/fonts/BaksosapiproRegular-0WXRr.otf) format('opentype');
+        }
+
+        @font-face {
+            font-family: BaksoSapio-Light;
+            src: url(assets/fonts/BaksosapiproLight-4B0rY.otf) format('opentype');
+        }
+
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
+</head>
+<body>
+    <div class="container" id="game-container"></div>
+    <script type="module" src="src/main.js"></script>
+</body>
+</html>
