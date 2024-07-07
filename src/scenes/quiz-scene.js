@@ -26,6 +26,10 @@ export class QuizScene extends Phaser.Scene {
     #gameOver = false; 
     /** @type {Phaser.GameObjects.Image} */
     #backBtn; 
+    /** @type {Phaser.GameObjects.Image} */
+    #overlay; 
+    /** @type {Phaser.GameObjects.Container} */
+    #overlayContainer
 
     constructor() {
         super({
@@ -154,6 +158,7 @@ export class QuizScene extends Phaser.Scene {
     #backBtnOnClick = () => {
         if(this.#gameOver || this.#currLevel === 4) {
             // Reset before transitioning 
+            this.#hideEndGameOverlay(); 
             this.reset(); 
             this.#transitionToNextScene(SCENE_KEYS.TITLE_SCENE); 
         }
@@ -181,7 +186,7 @@ export class QuizScene extends Phaser.Scene {
     } 
 
     #createEndGameOverlay(level = 1) {
-        const overlay = this.add
+        this.#overlay = this.add
         .image(0, 0, UI_ASSET_KEYS.OVERLAY)
         .setOrigin(0)
         .setDepth(3)
@@ -189,7 +194,7 @@ export class QuizScene extends Phaser.Scene {
         this.#quizMenu.disableAnswersInteractivity(); 
 
         // Create the container for the endgame overlay 
-        const overlayContainer = this.add.container(this.sys.game.canvas.width/2, this.sys.game.canvas.height/2 - 40,[])
+        this.#overlayContainer = this.add.container(this.sys.game.canvas.width/2, this.sys.game.canvas.height/2 - 40,[])
             .setDepth(3)
         // Create the overlay UI 
         const overlayUI = this.add
@@ -237,11 +242,11 @@ export class QuizScene extends Phaser.Scene {
             fontStyle: "bold"
         }).setOrigin(1,0) 
 
-        overlayContainer.add(overlayUI)
-        overlayContainer.add(this.#backBtn)
-        overlayContainer.add(overlayUIText)
-        overlayContainer.add(scoreText)
-        overlayContainer.add(nextLevelText)
+        this.#overlayContainer.add(overlayUI)
+        this.#overlayContainer.add(this.#backBtn)
+        this.#overlayContainer.add(overlayUIText)
+        this.#overlayContainer.add(scoreText)
+        this.#overlayContainer.add(nextLevelText)
 
         // Add the end overlay based on the level 
         switch (level) {
@@ -276,6 +281,13 @@ export class QuizScene extends Phaser.Scene {
                     console.log("Invalid level set")
                     break;
         }
+    }
+
+    #hideEndGameOverlay() {
+        // Destroy the overlay container and the overlay 
+        this.#overlay.destroy();
+        this.#overlayContainer.destroy();
+
     }
 
     update() {
